@@ -4,7 +4,7 @@ applications:
   instances: 1
   memory: 128M
   routes:
-    - route: <insert your route here>
+    - route: product-list.cfapps.eu10.hana.ondemand.com
   path: myapp
   buildpacks:
     - nodejs_buildpack  
