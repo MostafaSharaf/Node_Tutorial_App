@@ -8,6 +8,8 @@ const port = process.env.port || 8080;
 const passport = require('passport');
 const { JWTStrategy } = require('@sap/xssec');
 const xsenv = require('@sap/xsenv');
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 //////////////////////////////////////////////////////////
 // XSUAA Middleware
 passport.use(new JWTStrategy(xsenv.getServices({uaa:{tag:'xsuaa'}}).uaa));
@@ -25,6 +27,19 @@ function checkReadScope(req, res, next) {
     	res.status(403).end('Forbidden');
 	}
 }
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+app.put('/callback/v1.0/tenants/*', function (req, res) {
+	var consumerSubdomain = req.body.subscribedSubdomain;
+	var tenantAppURL = "https:\/\/" + consumerSubdomain + "-approuter-product-list-mosty." + "cfapps.eu10.hana.ondemand.com/products";
+	res.status(200).send(tenantAppURL);
+  });
+
+app.delete('/callback/v1.0/tenants/*', function (req, res) {
+	var consumerSubdomain = req.body.subscribedSubdomain;
+	var tenantAppURL = "https:\/\/" + consumerSubdomain + "-approuter-product-list-mosty." + "cfapps.eu10.hana.ondemand.com/products";
+	res.status(200).send(tenantAppURL);
+});
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 // Serve static files
